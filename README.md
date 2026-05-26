@@ -2,6 +2,8 @@
 
 FirstStep is an elite, modern, full-stack web application designed for professionals to craft high-fidelity, ATS-optimized resumes and CVs. Built with a premium, responsive glassmorphism UI, a secure Express + Neon PostgreSQL database, and deep Google Gemini AI integrations, FirstStep gives job seekers the ultimate toolkit to stand out and land their dream jobs.
 
+✨ **Live Production Demo**: [https://first--step.vercel.app/](https://first--step.vercel.app/)
+
 ---
 
 ## ✨ Features
