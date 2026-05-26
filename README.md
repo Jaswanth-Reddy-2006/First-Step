@@ -1,73 +1,123 @@
-# React + TypeScript + Vite
+# 🚀 FirstStep — Professional AI-Powered Resume & CV Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+FirstStep is an elite, modern, full-stack web application designed for professionals to craft high-fidelity, ATS-optimized resumes and CVs. Built with a premium, responsive glassmorphism UI, a secure Express + Neon PostgreSQL database, and deep Google Gemini AI integrations, FirstStep gives job seekers the ultimate toolkit to stand out and land their dream jobs.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+### 🔐 Full Authentication & Secure Database
+- **JWT Authentication**: Secure user signup, login, and robust session management.
+- **Neon PostgreSQL DB**: Seamless backend data persistence hosted on the cloud.
+- **Hybrid Storage Strategy**: Updates are saved instantly in local storage and synchronized with the PostgreSQL database in the background (non-blocking). Works offline and online!
+- **Private Guest Mode**: Don't want to create an account? Use Guest Mode to keep all your data strictly in your local browser cache.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🤖 Gemini AI Optimizations
+- **ATS Match Score & Keyword Audit**: Scan your resume against any target job description. The AI calculates a compatibility percentage, scores your structure, and lists missing keywords.
+- **AI Job Role Tailoring**: Instantly rewrite and align your professional summary and experience points to optimize relevance for a target role.
+- **AI Experience Bullet Enhancer**: Transform generic duty descriptions into high-impact, results-driven professional sentences with active verbs and optional metrics.
+- **AI Resume Import**: Simply paste plain text or upload a document; Gemini AI parses, structures, and auto-populates all detail fields.
 
-## Expanding the ESLint configuration
+### 🎨 Premium UI/UX & Responsive Layouts
+- **Collapsible Accordion Sidebar**: Beautiful, unified accordion menu that auto-collapses unused sections and keeps active states in perfect sync.
+- **Spacious Workspace**: Responsive flex-grid layouts stretch to fill the screen, making the platform feel expansive and comfortable at all screen resolutions.
+- **GPU-Accelerated 3D Marquee**: A stunning, infinitely scrolling 3D template gallery on the landing page utilizing smooth, high-performance CSS keyframe animations.
+- **Interactive Forms & Custom Sections**: 
+  - Dynamic Month/Year pickers and custom section templates.
+  - "Currently work here" toggles to hide end dates dynamically.
+  - Bullet-by-bullet list editors.
+  - Custom fields to add any custom data to personal details or work history.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 📄 Premium Exports
+- **High-Fidelity PDF**: One-click printing optimized with custom font overrides, spacing, and outer margin density dials.
+- **PowerPoint Widescreen Presentation**: Download your profile as structured, beautifully aligned slides (using `pptxgenjs`), ideal for technical review interviews.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🛠️ Technology Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Frontend
+- **React 19** & **TypeScript**
+- **Vite** (Next-generation build tool)
+- **Framer Motion** & **Lucide Icons**
+- **Vanilla CSS** (Curated HSL dark/light modes, premium glassmorphism, responsive grid systems)
+
+### Backend
+- **Node.js** & **Express**
+- **Neon Serverless PostgreSQL** database client
+- **JSONB** relational store for secure and flexible data representation
+- **JSON Web Tokens (JWT)** for session validation
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- [Node.js](https://nodejs.org) (v18 or higher recommended)
+- A [Neon PostgreSQL](https://neon.tech) account (optional, for cloud database features)
+- A [Google Gemini API Key](https://ai.google.dev/) (optional, for AI features)
+
+---
+
+## 💻 Installation & Setup
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/Jaswanth-Reddy-2006/First-Step.git
+   cd First-Step
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables**
+   Create a `.env` file in the root directory and populate the variables:
+   ```env
+   # Neon PostgreSQL Connection String (starts with postgresql://)
+   NEON_DATABASE_URL=your_neon_connection_string
+
+   # JWT Secret key (choose any secure random string)
+   JWT_SECRET=your_jwt_secret_key
+
+   # API Port (default is 3001)
+   PORT=3001
+   ```
+
+---
+
+## 🏃‍♂️ Running the Application
+
+### Concurrent Full-Stack Mode (Vite Dev Server + Node.js API Server)
+Runs both the frontend (port `5173` or `5174`) and backend (port `3001`) simultaneously:
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Frontend-Only Mode (Local / Offline Cache)
+Runs just the Vite frontend dev server. Data will be persisted in your browser's local storage:
+```bash
+npm run dev:vite
 ```
+
+### API Server-Only Mode
+```bash
+npm run dev:server
+```
+
+---
+
+## 🐳 Production Deployment
+
+1. **Build the Production Bundle**
+   ```bash
+   npm run build
+   ```
+2. **Start the Production API & Frontend Proxy**
+   Ensure your hosting provider points to `server/index.js` or runs `node server/index.js` with your environment configuration.
+
+---
+
+## 📜 License
+This project is open-source and available under the MIT License.
