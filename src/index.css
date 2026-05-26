@@ -1,0 +1,381 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --background: #ffffff;
+  --foreground: #111111;
+  
+  --card-bg: #ffffff;
+  --card-border: #e4e4e7;
+  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
+  --card-shadow-hover: 0 20px 40px -15px rgba(255, 49, 49, 0.12);
+  
+  --primary: #111111;
+  --primary-foreground: #ffffff;
+  
+  --secondary: #f4f4f5;
+  --secondary-foreground: #71717a;
+  
+  --accent: #ff3131;
+  --accent-hover: #e02020;
+  --accent-light: rgba(255, 49, 49, 0.06);
+  --accent-shadow: rgba(255, 49, 49, 0.2);
+  
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  
+  --border: #e4e4e7;
+  --input: #fafafa;
+  --radius: 12px;
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  --font-space: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Base resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-space);
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+  width: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Grid & Layout Overlay (Inspired by Portfolio) */
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(17, 17, 17, 0.015) 1px, transparent 1px), 
+    linear-gradient(90deg, rgba(17, 17, 17, 0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.glow-sphere {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.sphere-red {
+  background-color: var(--accent);
+  width: 600px;
+  height: 600px;
+  top: -10%;
+  right: -5%;
+  animation: float-glow 20s infinite alternate ease-in-out;
+}
+
+.sphere-dark {
+  background-color: #3b82f6; /* Subtle blue balance from portfolio */
+  width: 500px;
+  height: 500px;
+  bottom: 10%;
+  left: -10%;
+  animation: float-glow 25s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes float-glow {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, -60px) scale(1.1); }
+  100% { transform: translate(-40px, 40px) scale(0.9); }
+}
+
+/* Common Layout Components */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Headers & Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--foreground) 30%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Form Styles */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: var(--input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: var(--transition-fast);
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--accent);
+  background-color: var(--background);
+  box-shadow: 0 0 0 4px var(--accent-light);
+}
+
+/* Premium Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 4px 14px var(--accent-shadow);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--accent-shadow);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--foreground);
+  border: 1.5px solid var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--foreground);
+  background-color: var(--secondary);
+}
+
+.btn-danger {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.btn-danger:hover {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Badge styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: var(--secondary);
+  color: var(--muted-foreground);
+  width: max-content;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent);
+  border-radius: 50%;
+  animation: pulse-dot-css 2s infinite;
+}
+
+@keyframes pulse-dot-css {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+/* Floating label effect (from Portfolio) */
+.floating-badge {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--foreground);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  animation: float-badge-anim 4s ease-in-out infinite alternate;
+  white-space: nowrap;
+}
+
+@keyframes float-badge-anim {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* Custom arrangement reordering styles */
+.reorder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reorder-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--background);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  transition: var(--transition-fast);
+}
+
+.reorder-item:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  transform: translateX(4px);
+}
+
+.reorder-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.reorder-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.reorder-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.reorder-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Template layout print style guidelines */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+  }
+  
+  /* Hide all UI elements including navigation, editing sidebars, analyzer panels */
+  .no-print,
+  nav,
+  header,
+  .dashboard-sidebar,
+  .settings-modal,
+  .btn,
+  .action-bar,
+  .ats-analyzer-container,
+  footer {
+    display: none !important;
+  }
+
+  /* Force the active resume template card to span 100% width and display perfectly */
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Keep print page margin clean */
+  @page {
+    margin: 1.5cm;
+  }
+}
