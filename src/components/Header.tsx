@@ -31,8 +31,8 @@ export default function Header({ currentView, setView, currentUser, onLogout }: 
       <header className="header no-print">
         <div className="header-container">
           {/* Logo */}
-          <div className="logo" onClick={() => handleNavClick("home")}>
-            <FileText className="logo-icon" size={24} />
+          <div className="logo" onClick={() => handleNavClick("home")} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <img src="/favicon.png" alt="FirstStep Logo" style={{ width: "30px", height: "30px", objectFit: "contain", borderRadius: "6px" }} />
             <span>First</span>Step
           </div>
 

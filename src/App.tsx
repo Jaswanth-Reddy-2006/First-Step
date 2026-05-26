@@ -123,8 +123,8 @@ export default function App() {
         position: "fixed", inset: 0, display: "flex", alignItems: "center",
         justifyContent: "center", background: "#0a0a0a", flexDirection: "column", gap: 16
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, color: "#fff" }}>
-          <FileText size={28} color="#6366f1" />
+        <div style={{ display: "flex", alignItems: "center", gap: 12, color: "#fff" }}>
+          <img src="/favicon.png" alt="FirstStep Logo" style={{ width: "36px", height: "36px", objectFit: "contain", borderRadius: "6px" }} />
           <span style={{ fontSize: "1.6rem", fontWeight: 800 }}>
             <span style={{ color: "#6366f1" }}>First</span>Step
           </span>
@@ -153,8 +153,8 @@ export default function App() {
           <div className="auth-overlay">
             <div className="auth-card">
               {/* Logo */}
-              <div className="auth-logo">
-                <FileText size={30} color="#6366f1" />
+              <div className="auth-logo" style={{ gap: 12 }}>
+                <img src="/favicon.png" alt="FirstStep Logo" style={{ width: "36px", height: "36px", objectFit: "contain", borderRadius: "6px" }} />
                 <h1 className="auth-title">
                   <span style={{ color: "#6366f1" }}>First</span>Step
                 </h1>
