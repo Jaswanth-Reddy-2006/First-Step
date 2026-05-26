@@ -1,4 +1,4 @@
-import { FileText, ArrowRight, LogOut } from "lucide-react";
+import { ArrowRight, LogOut } from "lucide-react";
 
 interface HeaderProps {
   currentView: "landing" | "builder";

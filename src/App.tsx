@@ -4,7 +4,7 @@ import LandingPage from "./components/LandingPage";
 import Dashboard from "./components/Dashboard";
 import { Agentation } from "agentation";
 import {
-  FileText, Eye, EyeOff, Loader2, AlertCircle, UserPlus, LogIn, Zap
+  Eye, EyeOff, Loader2, AlertCircle, UserPlus, LogIn, Zap
 } from "lucide-react";
 import {
   signup, login, logout, verifySession, loginAsGuest, getStoredUser, checkApiStatus,
