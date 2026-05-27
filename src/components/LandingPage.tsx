@@ -137,7 +137,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
 
             <div className="hero-cta-group">
               <button className="btn btn-primary btn-large" onClick={onStart}>
-                Build Free
+                Take your first step
                 <ArrowRight size={18} />
               </button>
             </div>
@@ -271,11 +271,72 @@ export default function LandingPage({ onStart }: LandingPageProps) {
         </div>
       </section>
 
+      <footer className="landing-footer">
+        <div className="container footer-grid">
+          <div className="footer-brand">
+            <div className="logo" style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
+              <img src="/favicon.png" alt="FirstStep Logo" style={{ width: "30px", height: "30px", objectFit: "contain", borderRadius: "6px" }} />
+              <span style={{ color: "var(--accent)", fontWeight: 800 }}>First</span><span style={{ fontWeight: 800 }}>Step</span>
+            </div>
+            <p className="footer-desc">
+              Create professional, ATS-optimized resumes and CVs tailored directly to your dream career. Empowering your journey, one step at a time.
+            </p>
+          </div>
+          
+          <div className="footer-links-col">
+            <h4>Platform</h4>
+            <a href="#home">Home</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#features">Features</a>
+            <a href="#faqs">FAQs</a>
+          </div>
+
+          <div className="footer-links-col">
+            <h4>Features</h4>
+            <a href="#features">ATS Optimizer</a>
+            <a href="#features">AI Keyword Audit</a>
+            <a href="#features">100+ Templates</a>
+            <a href="#features">PPT Portfolio Export</a>
+          </div>
+
+          <div className="footer-links-col">
+            <h4>Legal & Security</h4>
+            <span>100% Client-Side Private</span>
+            <span>No Data Tracking</span>
+            <span>Open Source</span>
+          </div>
+        </div>
+        
+        <div className="container footer-bottom">
+          <p>&copy; {new Date().getFullYear()} FirstStep. Built with precision for developers and professionals.</p>
+        </div>
+      </footer>
+
       <style>{`
         .landing-page {
           position: relative;
           min-height: 100vh;
           padding-top: 80px;
+        }
+
+        .section-heading {
+          text-align: center;
+          margin-bottom: 40px;
+        }
+
+        .section-title {
+          font-size: clamp(2rem, 4vw, 2.75rem);
+          font-weight: 800;
+          color: var(--foreground);
+          margin-bottom: 12px;
+          text-align: center;
+        }
+
+        .section-subtitle {
+          font-size: 1.1rem;
+          color: var(--secondary-foreground);
+          margin-bottom: 32px; /* Adding bottom margin to .section-subtitle as requested */
+          text-align: center;
         }
 
         .hero-section {
@@ -662,6 +723,89 @@ export default function LandingPage({ onStart }: LandingPageProps) {
         @media (max-width: 580px) {
           .floating-badge {
             display: none !important;
+          }
+        }
+
+        /* Premium Footer Styling */
+        .landing-footer {
+          background-color: var(--secondary);
+          border-top: 1px solid var(--border);
+          padding: 80px 0 30px;
+          margin-top: 40px;
+        }
+
+        .footer-grid {
+          display: grid;
+          grid-template-columns: 2fr repeat(3, 1fr);
+          gap: 48px;
+          margin-bottom: 48px;
+        }
+
+        .footer-brand {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          max-width: 320px;
+        }
+
+        .footer-desc {
+          font-size: 0.9rem;
+          color: var(--secondary-foreground);
+          line-height: 1.6;
+        }
+
+        .footer-links-col {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        .footer-links-col h4 {
+          font-size: 1rem;
+          font-weight: 700;
+          color: var(--foreground);
+          margin-bottom: 8px;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        .footer-links-col a,
+        .footer-links-col span {
+          font-size: 0.9rem;
+          color: var(--secondary-foreground);
+          transition: var(--transition-fast);
+        }
+
+        .footer-links-col a:hover {
+          color: var(--accent);
+          transform: translateX(2px);
+        }
+
+        .footer-bottom {
+          border-top: 1px solid var(--border);
+          padding-top: 30px;
+          text-align: center;
+        }
+
+        .footer-bottom p {
+          font-size: 0.85rem;
+          color: var(--secondary-foreground);
+        }
+
+        @media (max-width: 1024px) {
+          .footer-grid {
+            grid-template-columns: 1.5fr 1fr;
+            gap: 32px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+          .footer-brand {
+            max-width: 100%;
           }
         }
       `}</style>

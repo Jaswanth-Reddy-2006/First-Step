@@ -4,10 +4,10 @@ import LandingPage from "./components/LandingPage";
 import Dashboard from "./components/Dashboard";
 import { Agentation } from "agentation";
 import {
-  Eye, EyeOff, Loader2, AlertCircle, UserPlus, LogIn, Zap
+  Eye, EyeOff, Loader2, AlertCircle, UserPlus, LogIn
 } from "lucide-react";
 import {
-  signup, login, logout, verifySession, loginAsGuest, getStoredUser, checkApiStatus,
+  signup, login, logout, verifySession, getStoredUser, checkApiStatus,
   type AuthUser,
 } from "./lib/auth";
 
@@ -28,7 +28,6 @@ export default function App() {
   const [showPw, setShowPw] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [authError, setAuthError] = useState("");
-  const [apiAvailable, setApiAvailable] = useState(false);
   const [dbConnected, setDbConnected] = useState(false);
 
   // On mount: restore session + check API status
@@ -36,7 +35,6 @@ export default function App() {
     const init = async () => {
       // Check if API server is running
       const status = await checkApiStatus();
-      setApiAvailable(status.available);
       setDbConnected(status.dbConnected);
 
       // Try to restore session
@@ -105,17 +103,6 @@ export default function App() {
     }
   };
 
-  // ── Guest access (no password, works without DB) ───────────────────────────
-  const handleGuestAccess = () => {
-    if (!formName.trim() || !formEmail.trim()) {
-      setAuthError("Please enter your name and email to continue as guest.");
-      return;
-    }
-    const user = loginAsGuest(formName, formEmail);
-    setCurrentUser(user);
-    setView("builder");
-  };
-
   // ── Loading splash ─────────────────────────────────────────────────────────
   if (isInitializing) {
     return (
@@ -151,12 +138,21 @@ export default function App() {
         ) : (
           /* ── Auth Modal ──────────────────────────────────────────────────── */
           <div className="auth-overlay">
+            {/* Animated 3D Background Elements */}
+            <div className="auth-3d-container">
+              <div className="floating-shape shape-1" />
+              <div className="floating-shape shape-2" />
+              <div className="floating-shape shape-3" />
+              <div className="floating-wireframe-card wire-1" />
+              <div className="floating-wireframe-card wire-2" />
+            </div>
+
             <div className="auth-card">
               {/* Logo */}
               <div className="auth-logo" style={{ gap: 12 }}>
                 <img src="/favicon.png" alt="FirstStep Logo" style={{ width: "36px", height: "36px", objectFit: "contain", borderRadius: "6px" }} />
                 <h1 className="auth-title">
-                  <span style={{ color: "#6366f1" }}>First</span>Step
+                  <span style={{ color: "var(--accent)" }}>First</span>Step
                 </h1>
               </div>
               <p className="auth-subtitle">
@@ -164,13 +160,11 @@ export default function App() {
               </p>
 
               {/* DB Status Badge */}
-              <div className={`auth-status-badge ${dbConnected ? "connected" : apiAvailable ? "no-db" : "offline"}`}>
+              <div className={`auth-status-badge ${dbConnected ? "connected" : "offline"}`}>
                 <span className="auth-status-dot" />
                 {dbConnected
-                  ? "Database connected — full account features enabled"
-                  : apiAvailable
-                  ? "Server running — add Neon URL for full features"
-                  : "Guest mode — data saved locally in this browser"}
+                  ? "Database Connected — profile sync active"
+                  : "Offline Mode — local database server unreachable"}
               </div>
 
               {/* Tab switcher */}
@@ -267,45 +261,6 @@ export default function App() {
                     : authTab === "signup" ? "Create Account" : "Sign In"}
                 </button>
               </form>
-
-              {/* Divider */}
-              <div className="auth-divider">
-                <span>or</span>
-              </div>
-
-              {/* Guest access */}
-              <div className="auth-guest-section">
-                {authTab === "login" && (
-                  <>
-                    <div className="auth-field" style={{ marginBottom: 8 }}>
-                      <input
-                        type="text"
-                        className="auth-input"
-                        placeholder="Your name (for guest mode)"
-                        value={formName}
-                        onChange={e => setFormName(e.target.value)}
-                      />
-                    </div>
-                    <div className="auth-field" style={{ marginBottom: 10 }}>
-                      <input
-                        type="email"
-                        className="auth-input"
-                        placeholder="Your email (for guest mode)"
-                        value={formEmail}
-                        onChange={e => setFormEmail(e.target.value)}
-                      />
-                    </div>
-                  </>
-                )}
-                <button
-                  type="button"
-                  className="auth-guest-btn"
-                  onClick={handleGuestAccess}
-                >
-                  <Zap size={14} />
-                  Continue as Guest (saves locally)
-                </button>
-              </div>
             </div>
 
             {/* ── Styles ─────────────────────────────────────────────────── */}
@@ -313,27 +268,124 @@ export default function App() {
               .auth-overlay {
                 position: fixed;
                 inset: 0;
-                background: radial-gradient(ellipse at 50% 30%, rgba(99,102,241,0.08), transparent 60%),
-                            radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.06), transparent 50%),
-                            #070710;
+                background: radial-gradient(ellipse at 50% 30%, rgba(255,49,49,0.09), transparent 60%),
+                            radial-gradient(ellipse at 80% 80%, rgba(255,49,49,0.05), transparent 50%),
+                            #06060c;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 z-index: 9999;
                 padding: 20px;
+                overflow: hidden;
               }
+              
+              /* 3D Visual elements styling */
+              .auth-3d-container {
+                position: absolute;
+                inset: 0;
+                overflow: hidden;
+                pointer-events: none;
+                z-index: 1;
+              }
+
+              .floating-shape {
+                position: absolute;
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+                filter: blur(50px);
+                opacity: 0.12;
+                background: linear-gradient(135deg, var(--accent) 0%, #111111 100%);
+                animation: blob-float 12s infinite ease-in-out;
+              }
+
+              .shape-1 {
+                width: 250px;
+                height: 250px;
+                top: 15%;
+                left: 10%;
+                animation-duration: 14s;
+              }
+
+              .shape-2 {
+                width: 300px;
+                height: 300px;
+                bottom: 10%;
+                right: 10%;
+                background: linear-gradient(135deg, #ff5e5e 0%, var(--accent) 100%);
+                animation-duration: 18s;
+                animation-delay: -3s;
+              }
+
+              .shape-3 {
+                width: 150px;
+                height: 150px;
+                top: 60%;
+                left: 20%;
+                background: linear-gradient(135deg, var(--accent) 0%, #ff8787 100%);
+                animation-duration: 10s;
+                animation-delay: -5s;
+              }
+
+              .floating-wireframe-card {
+                position: absolute;
+                width: 160px;
+                height: 220px;
+                background: rgba(255, 255, 255, 0.015);
+                border: 1.5px solid rgba(255, 49, 49, 0.15);
+                border-radius: 12px;
+                transform: perspective(600px) rotateX(45deg) rotateY(-15deg) rotateZ(10deg);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 49, 49, 0.05);
+                animation: float-3d-card 8s infinite alternate ease-in-out;
+              }
+
+              .wire-1 {
+                top: 20%;
+                right: 15%;
+                animation-duration: 8s;
+              }
+
+              .wire-2 {
+                bottom: 25%;
+                left: 15%;
+                animation-duration: 10s;
+                animation-delay: -2s;
+                width: 140px;
+                height: 190px;
+                border-color: rgba(255, 255, 255, 0.07);
+                transform: perspective(600px) rotateX(30deg) rotateY(25deg) rotateZ(-15deg);
+              }
+
+              @keyframes blob-float {
+                0% { transform: translateY(0px) rotate(0deg) scale(1); }
+                50% { transform: translateY(-30px) rotate(180deg) scale(1.08); }
+                100% { transform: translateY(0px) rotate(360deg) scale(1); }
+              }
+
+              @keyframes float-3d-card {
+                0% { transform: perspective(600px) rotateX(45deg) rotateY(-15deg) rotateZ(10deg) translateY(0); }
+                100% { transform: perspective(600px) rotateX(47deg) rotateY(-12deg) rotateZ(8deg) translateY(-20px); }
+              }
+
               .auth-card {
-                background: rgba(255,255,255,0.035);
-                backdrop-filter: blur(20px);
-                border: 1px solid rgba(255,255,255,0.08);
+                background: rgba(255, 255, 255, 0.025);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                border: 1px solid rgba(255, 255, 255, 0.06);
                 border-radius: 20px;
                 padding: 40px 36px;
                 width: 100%;
                 max-width: 440px;
-                box-shadow: 0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(99,102,241,0.1);
+                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 49, 49, 0.12);
                 display: flex;
                 flex-direction: column;
                 gap: 0;
+                position: relative;
+                z-index: 10;
+                transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+              }
+              .auth-card:hover {
+                border-color: rgba(255, 49, 49, 0.25);
+                box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55), 0 0 20px rgba(255, 49, 49, 0.08);
+                transform: translateY(-2px);
               }
               .auth-logo {
                 display: flex;
@@ -370,15 +422,10 @@ export default function App() {
                 color: #10b981;
                 border: 1px solid rgba(16,185,129,0.2);
               }
-              .auth-status-badge.no-db {
-                background: rgba(245,158,11,0.08);
-                color: #f59e0b;
-                border: 1px solid rgba(245,158,11,0.2);
-              }
               .auth-status-badge.offline {
-                background: rgba(99,102,241,0.08);
-                color: #a5b4fc;
-                border: 1px solid rgba(99,102,241,0.15);
+                background: rgba(239,68,68,0.08);
+                color: #f87171;
+                border: 1px solid rgba(239,68,68,0.15);
               }
               .auth-status-dot {
                 width: 7px;
@@ -412,9 +459,9 @@ export default function App() {
                 transition: all 0.2s ease;
               }
               .auth-tab-btn.active {
-                background: rgba(99,102,241,0.18);
-                color: #a5b4fc;
-                box-shadow: 0 2px 8px rgba(99,102,241,0.15);
+                background: rgba(255, 49, 49, 0.15);
+                color: #ff8787;
+                box-shadow: 0 2px 8px rgba(255, 49, 49, 0.15);
               }
               .auth-form {
                 display: flex;
@@ -447,8 +494,8 @@ export default function App() {
               }
               .auth-input::placeholder { color: #52525b; }
               .auth-input:focus {
-                border-color: rgba(99,102,241,0.5);
-                background: rgba(255,255,255,0.07);
+                border-color: rgba(255, 49, 49, 0.4);
+                background: rgba(255, 255, 255, 0.07);
               }
               .auth-pw-wrap {
                 position: relative;
@@ -484,7 +531,7 @@ export default function App() {
               .auth-submit-btn {
                 height: 44px;
                 border-radius: 10px;
-                background: linear-gradient(135deg, #6366f1, #8b5cf6);
+                background: linear-gradient(135deg, var(--accent), #b30000);
                 border: none;
                 color: #fff;
                 font-size: 0.92rem;
@@ -494,60 +541,18 @@ export default function App() {
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
-                transition: opacity 0.2s, transform 0.15s;
+                transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
                 margin-top: 4px;
+                box-shadow: 0 4px 15px rgba(255, 49, 49, 0.3);
               }
               .auth-submit-btn:hover:not(:disabled) {
-                opacity: 0.9;
+                opacity: 0.95;
                 transform: translateY(-1px);
+                box-shadow: 0 6px 20px rgba(255, 49, 49, 0.45);
               }
               .auth-submit-btn:disabled {
                 opacity: 0.55;
                 cursor: not-allowed;
-              }
-              .auth-divider {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                margin: 20px 0 16px;
-              }
-              .auth-divider::before, .auth-divider::after {
-                content: "";
-                flex: 1;
-                height: 1px;
-                background: rgba(255,255,255,0.07);
-              }
-              .auth-divider span {
-                font-size: 0.75rem;
-                color: #52525b;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.08em;
-              }
-              .auth-guest-section {
-                display: flex;
-                flex-direction: column;
-                gap: 0;
-              }
-              .auth-guest-btn {
-                height: 42px;
-                border-radius: 10px;
-                background: rgba(255,255,255,0.04);
-                border: 1px solid rgba(255,255,255,0.08);
-                color: #a1a1aa;
-                font-size: 0.88rem;
-                font-weight: 600;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                transition: all 0.2s ease;
-              }
-              .auth-guest-btn:hover {
-                background: rgba(255,255,255,0.07);
-                color: #d4d4d8;
-                border-color: rgba(255,255,255,0.15);
               }
               .spin-icon { animation: spin 0.8s linear infinite; }
             `}</style>
