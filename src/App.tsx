@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import Header from "./components/Header";
 import LandingPage from "./components/LandingPage";
 import Dashboard from "./components/Dashboard";
-import { Agentation } from "agentation";
 import {
   Eye, EyeOff, Loader2, AlertCircle, Cpu, Download, CheckCircle, Layers
 } from "lucide-react";
@@ -592,7 +591,7 @@ export default function App() {
         )}
       </main>
 
-      {import.meta.env.DEV && <Agentation endpoint="http://localhost:4747" />}
+
 
       <style>{`
         .app-container {
