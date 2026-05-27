@@ -4,7 +4,7 @@ import LandingPage from "./components/LandingPage";
 import Dashboard from "./components/Dashboard";
 import { Agentation } from "agentation";
 import {
-  Eye, EyeOff, Loader2, AlertCircle
+  Eye, EyeOff, Loader2, AlertCircle, Cpu, Download, CheckCircle, Layers
 } from "lucide-react";
 import {
   signup, login, logout, verifySession, getStoredUser, checkApiStatus,
@@ -161,21 +161,36 @@ export default function App() {
         {currentPath === "/login" ? (
           /* ── White Two-Column Login Page ─────────────────────────────────── */
           <div className="login-page-container">
-            {/* Left Column: 3D model video */}
+            {/* Left Column: Premium Video Mockup Card */}
             <div className="login-left-panel">
-              <div className="login-video-overlay" />
-              <div className="login-video-badge">
-                <span className="login-badge-dot"></span>
-                Interactive 3D Preview
+              <div className="mock-resume-card-login">
+                <video
+                  src="/landing_Page_VIdeo.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="login-video-model"
+                />
+                
+                {/* Floating badges */}
+                <div className="floating-badge badge-top-left">
+                  <Cpu size={14} className="badge-icon-red" />
+                  AI Keyword Matcher
+                </div>
+                <div className="floating-badge badge-top-right">
+                  <Download size={14} className="badge-icon-red" />
+                  100+ Preset Templates
+                </div>
+                <div className="floating-badge badge-bottom-left">
+                  <CheckCircle size={14} className="badge-icon-red" />
+                  95% ATS Target Score
+                </div>
+                <div className="floating-badge badge-bottom-right">
+                  <Layers size={14} className="badge-icon-red" />
+                  Custom Section Order
+                </div>
               </div>
-              <video
-                src="/Resume_3d_Model.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="login-video-model"
-              />
             </div>
 
             {/* Right Column: Clean Form */}
@@ -270,24 +285,26 @@ export default function App() {
                 {/* Bottom switcher trigger inside login card footer */}
                 <div className="login-toggle-footer">
                   {authTab === "login" ? (
-                    <p className="toggle-text">
+                    <p>
                       Don't have an account?{" "}
-                      <span
-                        className="toggle-link-red"
+                      <button
+                        type="button"
+                        className="login-toggle-link"
                         onClick={() => { setAuthTab("signup"); resetForm(); }}
                       >
                         Create an account
-                      </span>
+                      </button>
                     </p>
                   ) : (
-                    <p className="toggle-text">
+                    <p>
                       Already have an account?{" "}
-                      <span
-                        className="toggle-link-red"
+                      <button
+                        type="button"
+                        className="login-toggle-link"
                         onClick={() => { setAuthTab("login"); resetForm(); }}
                       >
                         Sign in
-                      </span>
+                      </button>
                     </p>
                   )}
                 </div>
@@ -306,7 +323,7 @@ export default function App() {
               }
               
               .login-left-panel {
-                flex: 1.25;
+                flex: 1.2;
                 position: relative;
                 background-color: #fafafa;
                 border-right: 1px solid var(--border);
@@ -314,63 +331,81 @@ export default function App() {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                padding: 40px;
+                background-image: 
+                  linear-gradient(rgba(17, 17, 17, 0.015) 1px, transparent 1px), 
+                  linear-gradient(90deg, rgba(17, 17, 17, 0.015) 1px, transparent 1px);
+                background-size: 30px 30px;
               }
-
-              .login-video-overlay {
-                position: absolute;
-                inset: 0;
-                background: radial-gradient(circle, rgba(255,255,255,0) 40%, rgba(0,0,0,0.06) 100%),
-                            linear-gradient(to top, rgba(0,0,0,0.08) 0%, transparent 40%);
-                pointer-events: none;
-                z-index: 2;
+              
+              .mock-resume-card-login {
+                width: 100%;
+                max-width: 440px;
+                aspect-ratio: 16 / 9;
+                background: #ffffff;
+                border: 4px solid var(--foreground);
+                border-radius: 20px;
+                padding: 0;
+                position: relative;
+                box-shadow: 
+                  0 20px 50px rgba(0, 0, 0, 0.12),
+                  0 5px 15px rgba(255, 49, 49, 0.04);
               }
 
               .login-video-model {
-                width: 88%;
-                height: 88%;
-                object-fit: contain;
-                border-radius: 16px;
-                box-shadow: 
-                  0 20px 45px rgba(0, 0, 0, 0.1),
-                  0 0 0 1px rgba(255, 49, 49, 0.06);
-                transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s;
-                z-index: 1;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 14px;
               }
 
-              .login-left-panel:hover .login-video-model {
-                transform: scale(1.025) translateY(-4px) rotateY(-2deg);
-                box-shadow: 
-                  0 30px 60px rgba(255, 49, 49, 0.08),
-                  0 0 20px rgba(255, 49, 49, 0.04),
-                  0 0 0 1px rgba(255, 49, 49, 0.15);
+              .badge-icon-red {
+                color: var(--accent);
               }
 
-              .login-video-badge {
+              /* Floating label effect (synchronized from index.css) */
+              .floating-badge {
                 position: absolute;
-                top: 24px;
-                left: 24px;
                 background: rgba(255, 255, 255, 0.85);
                 backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                border: 1px solid rgba(255, 255, 255, 0.5);
+                border: 1px solid rgba(255, 255, 255, 0.4);
                 color: var(--foreground);
                 padding: 8px 16px;
                 border-radius: 20px;
-                font-size: 0.78rem;
+                font-size: 0.8rem;
                 font-weight: 600;
                 box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+                animation: float-badge-anim 4s ease-in-out infinite alternate;
+                white-space: nowrap;
                 display: flex;
                 align-items: center;
-                gap: 8px;
-                z-index: 3;
+                gap: 6px;
+                z-index: 50;
               }
 
-              .login-badge-dot {
-                width: 6px;
-                height: 6px;
-                background-color: var(--accent);
-                border-radius: 50%;
-                animation: pulse-dot-css 2s infinite;
+              @keyframes float-badge-anim {
+                0% { transform: translateY(0); }
+                100% { transform: translateY(-8px); }
+              }
+
+              .badge-top-left {
+                top: -20px;
+                left: -30px;
+              }
+
+              .badge-top-right {
+                top: -20px;
+                right: -30px;
+              }
+
+              .badge-bottom-left {
+                bottom: -20px;
+                left: -30px;
+              }
+
+              .badge-bottom-right {
+                bottom: -20px;
+                right: -30px;
               }
               
               .login-right-panel {
@@ -509,31 +544,45 @@ export default function App() {
                 opacity: 0.55;
                 cursor: not-allowed;
               }
-              .spin-icon { animation: spin 0.8s linear infinite; }
 
+              /* Premium Footer Switcher Capsule Styling */
               .login-toggle-footer {
-                margin-top: 28px;
+                margin-top: 32px;
                 text-align: center;
-              }
-
-              .toggle-text {
                 font-size: 0.92rem;
                 color: var(--secondary-foreground);
-                line-height: 1.5;
+                padding: 16px;
+                background-color: var(--secondary);
+                border-radius: var(--radius);
+                border: 1px dashed var(--border);
+                transition: var(--transition-fast);
               }
 
-              .toggle-link-red {
+              .login-toggle-footer:hover {
+                border-color: var(--accent);
+                background-color: var(--accent-light);
+              }
+
+              .login-toggle-link {
+                background: none;
+                border: none;
                 color: var(--accent);
-                font-weight: 600;
+                font-weight: 700;
                 cursor: pointer;
-                transition: color 0.15s;
-                margin-left: 4px;
+                padding: 0;
+                margin-left: 6px;
+                transition: all 0.2s ease;
+                border-bottom: 2px solid transparent;
+                display: inline-block;
               }
 
-              .toggle-link-red:hover {
+              .login-toggle-link:hover {
                 color: var(--accent-hover);
-                text-decoration: underline;
+                border-bottom-color: var(--accent);
+                transform: translateY(-0.5px);
               }
+
+              .spin-icon { animation: spin 0.8s linear infinite; }
             `}</style>
           </div>
         ) : currentPath === "/builder" && currentUser ? (
