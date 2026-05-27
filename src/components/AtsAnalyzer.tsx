@@ -714,6 +714,33 @@ export default function AtsAnalyzer({ data, onChange }: AtsAnalyzerProps) {
         .loading-spinner {
           animation: spin 1s linear infinite;
         }
+
+        @media (max-width: 768px) {
+          .keywords-lists-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+          
+          .ats-score-row {
+            flex-direction: column;
+            text-align: center;
+            gap: 16px;
+          }
+
+          .ats-score-gauge {
+            margin: 0 auto;
+          }
+          
+          .suggestion-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+          }
+
+          .suggestion-header button {
+            width: 100%;
+          }
+        }
       `}</style>
     </div>
   );

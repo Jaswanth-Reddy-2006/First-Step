@@ -595,6 +595,58 @@ export default function App() {
               }
 
               .spin-icon { animation: spin 0.8s linear infinite; }
+
+              /* Login Responsiveness Media Queries */
+              @media (max-width: 1024px) {
+                .login-page-container {
+                  flex-direction: column;
+                  min-height: auto;
+                }
+                
+                .login-left-panel {
+                  flex: none;
+                  width: 100%;
+                  height: 340px;
+                  border-right: none;
+                  border-bottom: 1px solid var(--border);
+                  padding: 40px 24px;
+                }
+
+                .mock-resume-card-login {
+                  max-width: 380px;
+                }
+
+                .login-right-panel {
+                  flex: none;
+                  width: 100%;
+                  padding: 48px 24px;
+                }
+              }
+
+              @media (max-width: 768px) {
+                .login-left-panel {
+                  display: none;
+                }
+
+                .login-page-container {
+                  margin-top: 80px;
+                  min-height: calc(100vh - 80px);
+                }
+
+                .login-right-panel {
+                  padding: 40px 20px;
+                }
+              }
+
+              @media (max-width: 480px) {
+                .login-card {
+                  max-width: 100%;
+                }
+
+                .login-form-title {
+                  font-size: 1.85rem;
+                }
+              }
             `}</style>
           </div>
         ) : currentPath === "/builder" && currentUser ? (

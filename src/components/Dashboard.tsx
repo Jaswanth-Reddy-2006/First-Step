@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { 
   FileEdit, Layers, Cpu, Home, User, Briefcase, Code, 
   GraduationCap, Award, Wrench, Layout, Printer, Download, Search, Check, FileText,
-  ChevronDown, ChevronUp, Plus, Trash2, Copy, Sparkles, Upload
+  ChevronDown, ChevronUp, Plus, Trash2, Copy, Sparkles, Upload, Menu, X
 } from "lucide-react";
 import type { ResumeData } from "../types/resume";
 import { defaultResumeData, samplePreviewData } from "../data/defaultResumeData";
@@ -103,6 +103,44 @@ export default function Dashboard({ currentUser }: DashboardProps) {
   const [newDocType, setNewDocType] = useState<"resume" | "cv">("resume");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [createModalType, setCreateModalType] = useState<"standard" | "ai">("standard");
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+
+  const getActiveTabTitle = () => {
+    switch (sidebarTab) {
+      case "home":
+        return "Dashboard Home";
+      case "import-resume":
+        return "Import Resume";
+      case "customize-doc":
+        if (configSubTab === "template") return "Select Template";
+        if (configSubTab === "arrange") return "Arrange Sections";
+        if (configSubTab === "export") return "Export PDF / Document";
+        return "Customize Document";
+      case "ats":
+        return "ATS Score Check";
+      case "tailor":
+        return "Tailor for Job Role";
+      case "bullet-enhancer":
+        return "AI Bullet Enhancer";
+      case "import-template":
+        return "Add Template";
+      case "edit":
+        switch (formTab) {
+          case "personal": return "Personal Info";
+          case "experience": return "Work History";
+          case "projects": return "Technical Projects";
+          case "skills": return "Skills Inventory";
+          case "education": return "Education";
+          case "certs": return "Certificates";
+          case "achievements": return "Achievements";
+          case "publications": return "Publications";
+          case "custom-sections": return "Custom Sections";
+          default: return "Edit Details";
+        }
+      default:
+        return "FirstStep Builder";
+    }
+  };
 
   const allPresets = [...templatesList, ...customPresets];
   const filteredPresets = allPresets.filter(preset =>
@@ -1079,7 +1117,29 @@ export default function Dashboard({ currentUser }: DashboardProps) {
 
   return (
     <div className="dashboard-layout">
-      <aside className="dashboard-side-navbar no-print">
+      {/* Mobile Top Header Bar */}
+      <div className="mobile-dashboard-header no-print">
+        <button 
+          className="mobile-header-menu-btn" 
+          onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+          type="button"
+          aria-label="Toggle Navigation Panel"
+        >
+          {isMobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <span className="mobile-header-title">{getActiveTabTitle()}</span>
+        <div style={{ width: 36 }}></div> {/* Visual balance spacing */}
+      </div>
+
+      {/* Slide-in Drawer Backdrop */}
+      {isMobileNavOpen && (
+        <div 
+          className="mobile-nav-backdrop no-print"
+          onClick={() => setIsMobileNavOpen(false)}
+        />
+      )}
+
+      <aside className={`dashboard-side-navbar no-print ${isMobileNavOpen ? "drawer-open" : ""}`}>
         <div className="side-navbar-content">
           {/* SECTION 1: HOME/DASHBOARD BUTTON */}
           <div className="nav-group">
@@ -1088,6 +1148,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
               onClick={() => {
                 setSidebarTab("home");
                 setOpenSection(null);
+                setIsMobileNavOpen(false);
               }}
               type="button"
             >
@@ -1111,7 +1172,10 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                 <li>
                   <button 
                     className={`nav-item-btn ${sidebarTab === "edit" && formTab === "personal" ? "active" : ""}`}
-                    onClick={() => navigateToFormTab("personal")}
+                    onClick={() => {
+                      navigateToFormTab("personal");
+                      setIsMobileNavOpen(false);
+                    }}
                     type="button"
                   >
                     <User size={14} className="nav-item-icon" />
@@ -1121,7 +1185,10 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                 <li>
                   <button 
                     className={`nav-item-btn ${sidebarTab === "edit" && formTab === "experience" ? "active" : ""}`}
-                    onClick={() => navigateToFormTab("experience")}
+                    onClick={() => {
+                      navigateToFormTab("experience");
+                      setIsMobileNavOpen(false);
+                    }}
                     type="button"
                   >
                     <Briefcase size={14} className="nav-item-icon" />
@@ -1131,7 +1198,10 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                 <li>
                   <button 
                     className={`nav-item-btn ${sidebarTab === "edit" && formTab === "projects" ? "active" : ""}`}
-                    onClick={() => navigateToFormTab("projects")}
+                    onClick={() => {
+                      navigateToFormTab("projects");
+                      setIsMobileNavOpen(false);
+                    }}
                     type="button"
                   >
                     <Code size={14} className="nav-item-icon" />
@@ -1141,7 +1211,10 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                 <li>
                   <button 
                     className={`nav-item-btn ${sidebarTab === "edit" && formTab === "skills" ? "active" : ""}`}
-                    onClick={() => navigateToFormTab("skills")}
+                    onClick={() => {
+                      navigateToFormTab("skills");
+                      setIsMobileNavOpen(false);
+                    }}
                     type="button"
                   >
                     <Wrench size={14} className="nav-item-icon" />
@@ -1151,7 +1224,10 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                 <li>
                   <button 
                     className={`nav-item-btn ${sidebarTab === "edit" && formTab === "education" ? "active" : ""}`}
-                    onClick={() => navigateToFormTab("education")}
+                    onClick={() => {
+                      navigateToFormTab("education");
+                      setIsMobileNavOpen(false);
+                    }}
                     type="button"
                   >
                     <GraduationCap size={14} className="nav-item-icon" />
@@ -1161,7 +1237,10 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                 <li>
                   <button 
                     className={`nav-item-btn ${sidebarTab === "edit" && formTab === "certs" ? "active" : ""}`}
-                    onClick={() => navigateToFormTab("certs")}
+                    onClick={() => {
+                      navigateToFormTab("certs");
+                      setIsMobileNavOpen(false);
+                    }}
                     type="button"
                   >
                     <Award size={14} className="nav-item-icon" />
@@ -1171,7 +1250,10 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                 <li>
                   <button 
                     className={`nav-item-btn ${sidebarTab === "edit" && formTab === "achievements" ? "active" : ""}`}
-                    onClick={() => navigateToFormTab("achievements")}
+                    onClick={() => {
+                      navigateToFormTab("achievements");
+                      setIsMobileNavOpen(false);
+                    }}
                     type="button"
                   >
                     <Award size={14} className="nav-item-icon" />
@@ -1181,7 +1263,10 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                 <li>
                   <button 
                     className={`nav-item-btn ${sidebarTab === "edit" && formTab === "publications" ? "active" : ""}`}
-                    onClick={() => navigateToFormTab("publications")}
+                    onClick={() => {
+                      navigateToFormTab("publications");
+                      setIsMobileNavOpen(false);
+                    }}
                     type="button"
                   >
                     <FileText size={14} className="nav-item-icon" />
@@ -1191,7 +1276,10 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                 <li>
                   <button 
                     className={`nav-item-btn ${sidebarTab === "edit" && formTab === "custom-sections" ? "active" : ""}`}
-                    onClick={() => navigateToFormTab("custom-sections")}
+                    onClick={() => {
+                      navigateToFormTab("custom-sections");
+                      setIsMobileNavOpen(false);
+                    }}
                     type="button"
                   >
                     <Layers size={14} className="nav-item-icon" />
@@ -1204,6 +1292,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                     onClick={() => {
                       setSidebarTab("import-resume");
                       setOpenSection("details");
+                      setIsMobileNavOpen(false);
                     }}
                     type="button"
                     style={{ borderTop: "1px dashed var(--border)", borderRadius: "0", marginTop: "4px", paddingTop: "8px" }}
@@ -1235,6 +1324,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                       handleDocTypeChange("resume");
                       setSidebarTab("customize-doc");
                       setConfigSubTab("template");
+                      setIsMobileNavOpen(false);
                     }}
                     type="button"
                   >
@@ -1249,6 +1339,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                       handleDocTypeChange("cv");
                       setSidebarTab("customize-doc");
                       setConfigSubTab("template");
+                      setIsMobileNavOpen(false);
                     }}
                     type="button"
                   >
@@ -1278,6 +1369,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                     onClick={() => {
                       setSidebarTab("ats");
                       setOpenSection("optimize");
+                      setIsMobileNavOpen(false);
                     }}
                     type="button"
                   >
@@ -1291,6 +1383,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                     onClick={() => {
                       setSidebarTab("tailor");
                       setOpenSection("optimize");
+                      setIsMobileNavOpen(false);
                     }}
                     type="button"
                   >
@@ -1304,6 +1397,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                     onClick={() => {
                       setSidebarTab("bullet-enhancer");
                       setOpenSection("optimize");
+                      setIsMobileNavOpen(false);
                     }}
                     type="button"
                   >
@@ -1334,6 +1428,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                       setSidebarTab("customize-doc");
                       setConfigSubTab("template");
                       setOpenSection("templates");
+                      setIsMobileNavOpen(false);
                     }}
                     type="button"
                   >
@@ -1347,6 +1442,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                     onClick={() => {
                       setSidebarTab("import-template");
                       setOpenSection("templates");
+                      setIsMobileNavOpen(false);
                     }}
                     type="button"
                   >
@@ -1358,7 +1454,6 @@ export default function Dashboard({ currentUser }: DashboardProps) {
             )}
           </div>
         </div>
-
       </aside>
 
       {/* Editor Panel (Middle column in desktop) */}
@@ -1410,7 +1505,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                 </div>
 
                 {/* Quick Actions Row */}
-                <div className="quick-actions-row" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px", marginBottom: "28px" }}>
+                <div className="quick-actions-grid" style={{ marginBottom: "28px" }}>
                   <button 
                     onClick={() => {
                       setIsCreateModalOpen(true);
@@ -1465,7 +1560,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                 </div>
 
                 {/* Split 2-Column Grid */}
-                <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: "20px" }}>
+                <div className="home-split-grid">
                   
                   {/* Saved Documents */}
                   <div className="home-block">
@@ -1796,7 +1891,7 @@ export default function Dashboard({ currentUser }: DashboardProps) {
                       {filteredPresets.length === 0 ? (
                         <p className="presets-empty-state">No matching templates found.</p>
                       ) : (
-                        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }} className="form-grid">
+                        <div className="templates-grid" style={{ marginBottom: "12px" }}>
                           {filteredPresets.map((preset) => {
                             const isSelected = selectedPreset.id === preset.id;
                             const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
@@ -2920,14 +3015,144 @@ export default function Dashboard({ currentUser }: DashboardProps) {
           min-height: 0;
         }
 
+        /* Mobile Top Header Bar styles */
+        .mobile-dashboard-header {
+          display: none;
+          height: 56px;
+          background-color: #ffffff;
+          border-bottom: 1px solid var(--border);
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 16px;
+          position: fixed;
+          top: 80px;
+          left: 0;
+          width: 100%;
+          z-index: 80;
+        }
+
+        .mobile-header-menu-btn {
+          background: none;
+          border: none;
+          color: var(--foreground);
+          cursor: pointer;
+          padding: 8px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background-color 0.2s;
+        }
+
+        .mobile-header-menu-btn:hover {
+          background-color: var(--secondary);
+        }
+
+        .mobile-header-title {
+          font-weight: 700;
+          font-size: 0.95rem;
+          color: var(--foreground);
+          letter-spacing: -0.01em;
+        }
+
+        .mobile-nav-backdrop {
+          position: fixed;
+          inset: 0;
+          top: 80px;
+          background-color: rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          z-index: 85;
+          animation: fade-in-opacity 0.2s ease-out;
+        }
+
+        @keyframes fade-in-opacity {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        /* Quick Actions Grid */
+        .quick-actions-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+        }
+
+        /* Home Split Grid */
+        .home-split-grid {
+          display: grid;
+          grid-template-columns: 1.6fr 1fr;
+          gap: 20px;
+        }
+
+        /* Templates Grid */
+        .templates-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 12px;
+        }
+
+        @media (max-width: 1200px) {
+          .templates-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+
         @media (max-width: 1024px) {
           .dashboard-layout {
             grid-template-columns: 1fr;
-            height: calc(100vh - 80px);
-            margin-top: 80px;
+            height: calc(100vh - 80px - 56px);
+            margin-top: calc(80px + 56px);
+            position: relative;
           }
+
+          .mobile-dashboard-header {
+            display: flex;
+          }
+
+          /* Convert dashboard-side-navbar to drawer overlay */
           .dashboard-side-navbar {
-            display: none !important;
+            position: fixed;
+            top: calc(80px + 56px);
+            left: 0;
+            bottom: 0;
+            width: 260px;
+            height: calc(100vh - 80px - 56px);
+            z-index: 90;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.05);
+            display: flex !important;
+          }
+
+          .dashboard-side-navbar.drawer-open {
+            transform: translateX(0);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .quick-actions-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+          }
+
+          .home-split-grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
+
+          .templates-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .quick-actions-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .templates-grid {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>

@@ -1078,7 +1078,7 @@ export default function ResumeForm({ data, onChange, activeTab }: ResumeFormProp
           to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 580px) {
+        @media (max-width: 768px) {
           .form-grid {
             grid-template-columns: 1fr;
           }
