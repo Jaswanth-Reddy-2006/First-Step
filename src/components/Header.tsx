@@ -10,14 +10,14 @@ interface HeaderProps {
 export default function Header({ currentPath, onNavigate, currentUser, onLogout }: HeaderProps) {
   
   const handleNavClick = (sectionId: string) => {
-    if (currentPath === "/builder") {
+    if (currentPath !== "/") {
       onNavigate("/");
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
         }
-      }, 100);
+      }, 150);
     } else {
       const element = document.getElementById(sectionId);
       if (element) {

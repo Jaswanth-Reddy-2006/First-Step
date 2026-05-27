@@ -163,6 +163,11 @@ export default function App() {
           <div className="login-page-container">
             {/* Left Column: 3D model video */}
             <div className="login-left-panel">
+              <div className="login-video-overlay" />
+              <div className="login-video-badge">
+                <span className="login-badge-dot"></span>
+                Interactive 3D Preview
+              </div>
               <video
                 src="/Resume_3d_Model.mp4"
                 autoPlay
@@ -265,26 +270,24 @@ export default function App() {
                 {/* Bottom switcher trigger inside login card footer */}
                 <div className="login-toggle-footer">
                   {authTab === "login" ? (
-                    <p>
+                    <p className="toggle-text">
                       Don't have an account?{" "}
-                      <button
-                        type="button"
-                        className="login-toggle-link"
+                      <span
+                        className="toggle-link-red"
                         onClick={() => { setAuthTab("signup"); resetForm(); }}
                       >
                         Create an account
-                      </button>
+                      </span>
                     </p>
                   ) : (
-                    <p>
+                    <p className="toggle-text">
                       Already have an account?{" "}
-                      <button
-                        type="button"
-                        className="login-toggle-link"
+                      <span
+                        className="toggle-link-red"
                         onClick={() => { setAuthTab("login"); resetForm(); }}
                       >
                         Sign in
-                      </button>
+                      </span>
                     </p>
                   )}
                 </div>
@@ -312,11 +315,62 @@ export default function App() {
                 align-items: center;
                 justify-content: center;
               }
-              
+
+              .login-video-overlay {
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(circle, rgba(255,255,255,0) 40%, rgba(0,0,0,0.06) 100%),
+                            linear-gradient(to top, rgba(0,0,0,0.08) 0%, transparent 40%);
+                pointer-events: none;
+                z-index: 2;
+              }
+
               .login-video-model {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
+                width: 88%;
+                height: 88%;
+                object-fit: contain;
+                border-radius: 16px;
+                box-shadow: 
+                  0 20px 45px rgba(0, 0, 0, 0.1),
+                  0 0 0 1px rgba(255, 49, 49, 0.06);
+                transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s;
+                z-index: 1;
+              }
+
+              .login-left-panel:hover .login-video-model {
+                transform: scale(1.025) translateY(-4px) rotateY(-2deg);
+                box-shadow: 
+                  0 30px 60px rgba(255, 49, 49, 0.08),
+                  0 0 20px rgba(255, 49, 49, 0.04),
+                  0 0 0 1px rgba(255, 49, 49, 0.15);
+              }
+
+              .login-video-badge {
+                position: absolute;
+                top: 24px;
+                left: 24px;
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.5);
+                color: var(--foreground);
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-size: 0.78rem;
+                font-weight: 600;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                z-index: 3;
+              }
+
+              .login-badge-dot {
+                width: 6px;
+                height: 6px;
+                background-color: var(--accent);
+                border-radius: 50%;
+                animation: pulse-dot-css 2s infinite;
               }
               
               .login-right-panel {
@@ -456,6 +510,30 @@ export default function App() {
                 cursor: not-allowed;
               }
               .spin-icon { animation: spin 0.8s linear infinite; }
+
+              .login-toggle-footer {
+                margin-top: 28px;
+                text-align: center;
+              }
+
+              .toggle-text {
+                font-size: 0.92rem;
+                color: var(--secondary-foreground);
+                line-height: 1.5;
+              }
+
+              .toggle-link-red {
+                color: var(--accent);
+                font-weight: 600;
+                cursor: pointer;
+                transition: color 0.15s;
+                margin-left: 4px;
+              }
+
+              .toggle-link-red:hover {
+                color: var(--accent-hover);
+                text-decoration: underline;
+              }
             `}</style>
           </div>
         ) : currentPath === "/builder" && currentUser ? (
