@@ -1,17 +1,17 @@
 import { ArrowRight, LogOut } from "lucide-react";
 
 interface HeaderProps {
-  currentView: "landing" | "builder";
-  setView: (view: "landing" | "builder") => void;
+  currentPath: string;
+  onNavigate: (path: string) => void;
   currentUser: { name: string; email: string } | null;
   onLogout: () => void;
 }
 
-export default function Header({ currentView, setView, currentUser, onLogout }: HeaderProps) {
+export default function Header({ currentPath, onNavigate, currentUser, onLogout }: HeaderProps) {
   
   const handleNavClick = (sectionId: string) => {
-    if (currentView === "builder") {
-      setView("landing");
+    if (currentPath === "/builder") {
+      onNavigate("/");
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -37,7 +37,7 @@ export default function Header({ currentView, setView, currentUser, onLogout }: 
           </div>
 
           {/* Navigation Links */}
-          {currentView === "landing" && (
+          {(currentPath === "/" || currentPath === "/login") && (
             <nav className="nav-links-capsule">
               <button 
                 className="nav-btn-pill"
@@ -67,13 +67,13 @@ export default function Header({ currentView, setView, currentUser, onLogout }: 
           )}
 
           {/* CTA Button */}
-          {currentView === "landing" && !currentUser && (
+          {!currentUser && (
             <div className="header-actions">
               <button 
                 className="btn btn-primary header-cta-btn"
-                onClick={() => setView("builder")}
+                onClick={() => onNavigate("/login")}
               >
-                Build Free
+                Login
                 <ArrowRight size={16} />
               </button>
             </div>
@@ -82,10 +82,10 @@ export default function Header({ currentView, setView, currentUser, onLogout }: 
           {/* User profile capsule widget */}
           {currentUser && (
             <div className="header-actions" style={{ gap: "12px", display: "flex", alignItems: "center", gridColumn: "3", justifySelf: "end" }}>
-              {currentView === "landing" && (
+              {currentPath !== "/builder" && (
                 <button 
                   className="btn btn-secondary header-cta-btn"
-                  onClick={() => setView("builder")}
+                  onClick={() => onNavigate("/builder")}
                   style={{ height: "38px", padding: "0 16px", fontSize: "0.8rem" }}
                 >
                   Go to Builder
