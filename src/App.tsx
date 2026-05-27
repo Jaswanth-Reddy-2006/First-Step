@@ -165,7 +165,7 @@ export default function App() {
             <div className="login-left-panel">
               <div className="mock-resume-card-login">
                 <video
-                  src="/landing_Page_VIdeo.mp4"
+                  src="/Resume_3d_Model.mp4"
                   autoPlay
                   loop
                   muted
