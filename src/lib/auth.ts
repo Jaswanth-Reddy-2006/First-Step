@@ -103,5 +103,5 @@ export function loginAsGuest(name: string, email: string): AuthUser {
 }
 
 export function isGuestToken(token: string | null): boolean {
-  return token?.startsWith("guest.") ?? false;
+  return (token?.startsWith("guest.") || token?.startsWith("offline.")) ?? false;
 }
